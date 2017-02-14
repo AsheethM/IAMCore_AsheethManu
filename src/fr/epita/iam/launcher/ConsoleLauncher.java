@@ -27,16 +27,16 @@ public class ConsoleLauncher {
 	 * @throws SQLException 
 	 */
 	public static void main(String[] args) throws IOException, SQLException {
-		System.out.println("Hello, welcome to the IAM application");
+		System.out.println("Hello, welcome to - iAm - User Identity Management Application");
 		Scanner scanner = new Scanner(System.in);
 		dao = new JDBCIdentityDAO();
 		
 		
 		
 		//authentication
-		System.out.println("Please enter your login");
+		System.out.println("Please enter your login: ");
 		String login = scanner.nextLine();
-		System.out.println("Please enter your password");
+		System.out.println("Please enter your password: ");
 		String password = scanner.nextLine();
 		
 		if(!authenticate(login, password)){
@@ -77,10 +77,10 @@ public class ConsoleLauncher {
  * @param scanner
  */
 	private static void modifyIdentity(Scanner scanner) {
-		System.out.println("You've selected : Identity Modify");
-		System.out.println("Please enter the Identity email address");
+		System.out.println("You've selected : Modify User Record");
+		System.out.println("Please enter the current Email Address of the User: ");
 		String email1 = scanner.nextLine();
-		System.out.println("Please enter the Identity display name");
+		System.out.println("Please enter the current Name of the User: ");
 		String displayname=scanner.nextLine();
 		String id = null;
 		try {
@@ -92,14 +92,14 @@ public class ConsoleLauncher {
 		}
 		if(id == null)
 		{
-			System.out.println("No such Identity exists. Please retry");
+			System.out.println("No such User exists. Please retry");
 		scanner.close();
 	}
 		else
 		{
-		System.out.println("Please enter the new Identity Display Name");
+		System.out.println("Please enter new Name for this User: ");
 		String displayName=scanner.nextLine();
-		System.out.println("Please enter the new Identity email address");
+		System.out.println("Please enter new Email Address for this User: ");
 		String email=scanner.nextLine();
 		Identity newIdentity = new Identity(id, displayName,email);
 		try {
@@ -108,7 +108,7 @@ public class ConsoleLauncher {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("You have succesfully updated this identity :" + newIdentity);
+		System.out.println("You have succesfully updated this User :" + newIdentity);
 		}
 	}
 	
@@ -118,10 +118,10 @@ public class ConsoleLauncher {
 	 */
 	
 	private static void deleteIdentity(Scanner scanner) {
-		System.out.println("You've selected : Identity Delete");
-		System.out.println("Please enter the Identity email address");
+		System.out.println("You've selected : Delete User Record");
+		System.out.println("Please enter the User's Email Address: ");
 		String email1 = scanner.nextLine();
-		System.out.println("Please enter the Identity display name");
+		System.out.println("Please enter the User's Name: ");
 		String displayname=scanner.nextLine();
 		String id = null;
 		try {
@@ -132,7 +132,7 @@ public class ConsoleLauncher {
 		}
 		if(id == null)
 		{
-			System.out.println("No such Identity exists. Please retry");
+			System.out.println("No such User exists. Please retry");
 		scanner.close();
 	}
 		else
@@ -144,7 +144,7 @@ public class ConsoleLauncher {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("You have succesfully deleted this identity :" + newIdentity);
+		System.out.println("You have succesfully deleted this User: " + newIdentity);
 		}
 	}
 
@@ -155,7 +155,7 @@ public class ConsoleLauncher {
 	 * 
 	 */
 	private static void listIdentities() throws SQLException {
-		System.out.println("This is the list of all identities in the system");
+		System.out.println("This is the list of all the Users in the system");
 		List<Identity> list = dao.readAll();
 		int size = list.size();
 		for(int i = 0; i < size; i++){
@@ -170,14 +170,14 @@ public class ConsoleLauncher {
 	 * @throws SQLException 
 	 */
 	private static void createIdentity(Scanner scanner) throws SQLException {
-		System.out.println("You've selected : Identity Creation");
-		System.out.println("Please enter the Identity display name");
+		System.out.println("You've selected : Create New User");
+		System.out.println("Please enter the New User's Name: ");
 		String displayName = scanner.nextLine();
-		System.out.println("Please enter the Identity email");
+		System.out.println("Please enter the New User's Email Address: ");
 		String email = scanner.nextLine();
 		Identity newIdentity = new Identity(null, displayName, email);
 		dao.writeIdentity(newIdentity);
-		System.out.println("you succesfully created this identity :" + newIdentity);
+		System.out.println("You have succesfully created this User: " + newIdentity);
 	}
 
 	/**
@@ -188,12 +188,11 @@ public class ConsoleLauncher {
 	private static String menu(Scanner scanner) {
 		System.out.println("You're authenticated");
 		System.out.println("Here are the actions you can perform :");
-		System.out.println("a. Create an Identity");
-		System.out.println("b. Modify an Identity");
-		System.out.println("c. Delete an Identity");
-		System.out.println("d. List Identities");
-		System.out.println("e. quit");
-		System.out.println("your choice (a|b|c|d|e) ? : ");
+		System.out.println("a. Create New User");
+		System.out.println("b. Modify User Record");
+		System.out.println("c. Delete User Record");
+		System.out.println("d. List all Users");
+		System.out.println("your choice (a|b|c|d) ? : ");
 		String answer = scanner.nextLine();
 		return answer;
 	}
